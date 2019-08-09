@@ -8,6 +8,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wazert_site/beans/account_info_entity.dart';
+import 'package:wazert_site/config/config.dart';
 import 'package:wazert_site/widget/loading_dialog.dart';
 
 import '../account_model.dart';
@@ -218,7 +219,7 @@ Future<AccountInfoEntity> userLogin(account, password) async {
   try {
     BaseOptions options = BaseOptions(
         method: 'post',
-        baseUrl: 'http://183.129.194.104:11778',
+        baseUrl: Config.BASE_URL,
         contentType: ContentType.parse("application/x-www-form-urlencoded"),
         responseType: ResponseType.plain);
 

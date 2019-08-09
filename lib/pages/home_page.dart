@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:provider/provider.dart';
 import 'package:wazert_site/beans/FunctionMenu.dart';
+import 'package:wazert_site/beans/account_info_entity.dart';
 
+import '../account_model.dart';
+import 'car_mile_page.dart';
 import 'login_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,7 +32,16 @@ class _HomePageState extends State<HomePage> {
   ];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final _accountModel = Provider.of<AccountModel>(context);
+    AccountInfoEntity accountInfoEntity = _accountModel.accountInfo;
+
     return Scaffold(
       //appBar: AppBar(title: Text("网泽工地"),),
       //backgroundColor: Colors.white10,
@@ -36,7 +49,7 @@ class _HomePageState extends State<HomePage> {
         slivers: <Widget>[
           SliverToBoxAdapter(
             child: Container(
-              height: 140,
+              height: 160,
               child: Swiper(
                 itemCount: _imagesUrl.length,
                 autoplay: true,
@@ -50,10 +63,11 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-    SliverToBoxAdapter(
-      child: Container(height: 2,),
-    ),
-
+          SliverToBoxAdapter(
+            child: Container(
+              height: 2,
+            ),
+          ),
           SliverToBoxAdapter(
             child: Container(
               padding: const EdgeInsets.all(8.0),
@@ -84,41 +98,31 @@ class _HomePageState extends State<HomePage> {
                     color: Colors.white,
                     child: InkWell(
                       onTap: () {
-                        print(index);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => new LoginPage()),
-                        );
+                        if (accountInfoEntity == null) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => new LoginPage()),
+                          );
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => new CarMilePage()),
+                          );
+                        }
                       },
                       child: GridTile(
-                        child: Icon(_gridMenus[index].getIcon(),size: 32,color: Colors.lightBlue),
-                        footer: Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.all(10.0),
-                          child: Text(_gridMenus[index].getName(),textAlign: TextAlign.center,),
-                        )
-                      ),
-//                      child: Container(
-//                        alignment: Alignment.center,
-//                        child: Stack(
-//                          fit: StackFit.expand,
-//                          children: <Widget>[
-//                            Icon(
-//                              _gridMenus[index].getIcon(),
-//                              size: 32,
-//                              color: Colors.blue,
-//                            ),
-//                            Container(
-//                              alignment: Alignment.bottomCenter,
-//                              padding: const EdgeInsets.all(10.0),
-//                              child: Text(
-//                                _gridMenus[index].getName(),
-//                                textAlign: TextAlign.center,
-//                              ),
-//                            )
-//                          ],
-//                        ),
-//                      ),
+                          child: Icon(_gridMenus[index].getIcon(),
+                              size: 32, color: Colors.lightBlue),
+                          footer: Container(
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.all(10.0),
+                            child: Text(
+                              _gridMenus[index].getName(),
+                              textAlign: TextAlign.center,
+                            ),
+                          )),
                     ),
                   );
                 },
@@ -126,21 +130,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          //List
-//          new SliverFixedExtentList(
-//            itemExtent: 50.0,
-//            delegate: new SliverChildBuilderDelegate(
-//                    (BuildContext context, int index) {
-//                  //创建列表项
-//                  return new Container(
-//                    alignment: Alignment.center,
-//                    color: Colors.lightBlue[100 * (index % 9)],
-//                    child: new Text('list item $index'),
-//                  );
-//                },
-//                childCount: 50 //50个列表项
-//            ),
-//          ),
         ],
       ),
     );

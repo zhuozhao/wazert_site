@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wazert_site/pages/login_page.dart';
 
 import 'account_model.dart';
 import 'main_tab_page.dart';
@@ -22,6 +23,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      routes: {
+        'mainTabpage':(context)=>MainTabPage(),
+        'loginPage':(context)=>LoginPage(),
+      },
       home: MainTabPage(),
     );
   }
