@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
           ),
           SliverToBoxAdapter(
             child: Container(
-              height: 2,
+              height: 1,
             ),
           ),
           SliverToBoxAdapter(
